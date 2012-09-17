@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--
+  This is a sample Tomcat context file that provides runtime properties needed
+  for configuration in a particular deployment environment.
+  Use this as a template to create a test-client.xml file for your environment
+  and place it in $CATALINA_HOME/conf/Catalina/localhost or wherever context
+  configuration is located in your environment.
+-->
+
+<Context>
+  <Parameter name="serverName"
+    value="yourhost.example.com"
+    override="false" />
+  <Parameter name="casServerUrlPrefix"
+    value="https://cas.example.com/"
+    override="false" />
+  <Parameter name="casServerLoginUrl"
+    value="https://cas.example.com/login"
+    override="false" />
+</Context>

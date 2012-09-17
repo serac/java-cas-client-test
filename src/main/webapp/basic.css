@@ -1,0 +1,10 @@
+html, body {
+  font-family:Arial,Verdana,Sans-serif;
+  margin:10%;
+  padding:0;
+}
+
+#error { 
+  font-weight: bold;
+  color: #C00000;
+}
