@@ -1,0 +1,26 @@
+#!/bin/bash
+
+FILES=(
+  "config/java-cas-client.properties"
+  "config/jetty.p12"
+)
+for F in ${FILES[@]}; do
+  if [ ! -f $F ]; then
+    echo "File not found: $F"
+    echo "Please create it and try again."
+    exit
+  fi
+done
+
+if [ ! -f .env ]; then
+  read -p"Password for config/jetty.p12: " PASSWORD
+  echo "JAVA_OPTIONS=-Dkeystore.password=$PASSWORD" > .env
+  echo "Saving password in .env file for docker environment configuration"
+fi
+
+TAG="java-cas-client-test:latest"
+if [ "$(docker images -q $TAG 2> /dev/null)" == "" ]; then
+  mvn clean package
+  docker build -t "$TAG" target/docker-files
+fi
+docker run --rm --env-file .env --volume $(pwd)/config:/data -p8443:8443 -p8080:8080 $TAG
