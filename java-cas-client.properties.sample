@@ -1,8 +1,8 @@
-serverName=https://localhost:7443
+serverName=https://localhost:8443
 casServerUrlPrefix=https://cas.example.com/cas
 casServerLoginUrl=https://cas.example.com/cas/login
 renew=false
-Cas20ProxyReceivingTicketValidationFilter.proxyCallbackUrl=https://localhost:7443/casv2/secure/proxyReceptor
-Cas20ProxyReceivingTicketValidationFilter.proxyReceptorUrl=/casv2/secure/proxyReceptor
+Cas20ProxyReceivingTicketValidationFilter.proxyCallbackUrl=https://localhost:8443/secure/proxyReceptor
+Cas20ProxyReceivingTicketValidationFilter.proxyReceptorUrl=/secure/proxyReceptor
 Cas20ProxyReceivingTicketValidationFilter.redirectAfterValidation=true
-Cas20ProxyReceivingTicketValidationFilter.allowedProxyChains=https://localhost:7443/casv2/secure/
+Cas20ProxyReceivingTicketValidationFilter.allowedProxyChains=https://localhost:8443/secure/

@@ -34,8 +34,9 @@ body {
 }
 
 #content {
-  margin: 10px 25px;
   min-height:400px;
+  margin-left: 15px;
+  padding-right: 45px;
 }
 
 #page-footer {
@@ -49,18 +50,6 @@ body {
   padding:0px;
   text-align:center;
   color:#75787B;
-}
-
-h1 {
-  font-size: 1.6em;
-}
-
-h2 {
-  font-size: 1.4em;
-}
-
-h3 {
-  font-size: 1.2em;
 }
 
 tr th {
@@ -78,13 +67,6 @@ tr td {
   color: #CC0000;
 }
 
-.note {
-  margin:3px;
-  font-size:90%;
-  font-weight:bold;
-  color:#666;
-}
-
 #info, .info {
   font-size: 110%;
   font-weight: bold;
@@ -92,5 +74,11 @@ tr td {
 }
 
 #logout {
-  float:right;
+  padding:8px 0;
+}
+
+.jumbotron {
+  padding-left:15px;
+  padding-right:15px;
+  background-color:#f9f9f9;
 }
