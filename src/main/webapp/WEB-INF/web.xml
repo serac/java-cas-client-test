@@ -5,6 +5,10 @@
          version="3.0">
   
   <display-name>Java CAS Client Test Application</display-name>
+  
+  <listener>
+    <listener-class>edu.vt.middleware.cas.SSLInitializer</listener-class>
+  </listener>
 
   <context-param>
     <param-name>configurationStrategy</param-name>
@@ -31,6 +35,12 @@
     <filter-name>CASValidationFilter</filter-name>
     <filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
   </filter>
+  <!--
+  <filter>
+    <filter-name>CASValidationFilter</filter-name>
+    <filter-class>edu.vt.middleware.cas.ShibFlavoredSaml11TicketValidationFilter</filter-class>
+  </filter>
+  -->
   <filter-mapping>
     <filter-name>CASValidationFilter</filter-name>
     <url-pattern>/secure/*</url-pattern>

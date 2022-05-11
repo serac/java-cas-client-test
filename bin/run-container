@@ -11,11 +11,30 @@ for F in ${FILES[@]}; do
     exit
   fi
 done
-
-if [ ! -f .env ]; then
+JETTY_BASE=/var/lib/jetty
+if [ ! -f config/start.ini ]; then
+  read -p"HTTP port (8080): " HTTP_PORT
+  read -p"HTTPS port (8443): " HTTPS_PORT
   read -p"Password for config/jetty.p12: " PASSWORD
-  echo "JAVA_OPTIONS=-Dkeystore.password=$PASSWORD" > .env
-  echo "Saving password in .env file for docker environment configuration"
+  HTTP_PORT=${HTTP_PORT:-8080}
+  HTTPS_PORT=${HTTPS_PORT:-8443}
+  echo "Writing Jetty configuration in config/start.ini"
+  echo "--module=server" > config/start.ini
+  echo "--module=deploy" >> config/start.ini
+  echo "--module=http" >> config/start.ini
+  echo "--module=ssl" >> config/start.ini
+  echo "--module=https" >> config/start.ini
+  echo "--module=jsp" >> config/start.ini
+  echo "--module=jstl" >> config/start.ini
+  echo "jetty.monitorDir=/deploy" >> config/start.ini
+  echo "jetty.http.port=$HTTP_PORT" >> config/start.ini
+  echo "jetty.ssl.port=$HTTPS_PORT" >> config/start.ini
+  echo "jetty.sslContext.keyStorePath=$JETTY_BASE/jetty.p12" >> config/start.ini
+  echo "jetty.sslContext.keyStoreType=PKCS12" >> config/start.ini
+  echo "jetty.sslContext.keyStorePassword=$PASSWORD" >> config/start.ini
+else
+  HTTP_PORT=$(grep jetty.http.port config/start.ini | cut -d'=' -f2)
+  HTTPS_PORT=$(grep jetty.ssl.port config/start.ini | cut -d'=' -f2)
 fi
 
 TAG="java-cas-client-test:latest"
@@ -23,4 +42,10 @@ if [ "$(docker images -q $TAG 2> /dev/null)" == "" ]; then
   mvn clean package
   docker build -t "$TAG" target/docker-files
 fi
-docker run --rm --env-file .env --volume $(pwd)/config:/data -p8443:8443 -p8080:8080 $TAG
+docker run --rm -p$HTTP_PORT:$HTTP_PORT -p$HTTPS_PORT:$HTTPS_PORT \
+  --add-host=host.docker.internal:host-gateway \
+  --volume $(pwd)/config/java-cas-client.properties:/data/java-cas-client.properties \
+  --volume $(pwd)/config/start.ini:$JETTY_BASE/start.ini \
+  --volume $(pwd)/config/jetty.p12:$JETTY_BASE/jetty.p12 \
+  $TAG
+
