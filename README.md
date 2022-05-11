@@ -5,7 +5,7 @@ Jetty that exercises common CAS protocol capabilities and is useful for CAS
 server compatibility testing. The Maven build system produces two artifacts:
 
 1. java-cas-client-test.war - Java servlet
-2. java-cas-client-test:latest - Docker image built on top of jetty:latest
+2. java-cas-client-test:latest - Docker image built on top of jetty:10-jdk11-alpine-amazoncorretto
 
 ## Prerequisites
 
